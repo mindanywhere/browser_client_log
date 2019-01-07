@@ -1,0 +1,47 @@
+<DOCTYPE html>
+<!-- 日志记录和展现下载功能的前提是，浏览器支持HTML5,并且客户端一侧安全选项允许当前站点可信 
+     IE9以上 -->
+<html>
+
+<head>
+	<title>在本地记录日志的样例</title>
+	<script src="./log_for_agent.cc.js"></script>
+</head>
+
+<body>
+	
+	
+<script>
+
+	var logAgent = new logagent();
+	logAgent.log("记录当前事件的日志内容在这里写");//写日志
+	
+</script>
+	
+<script type="text/javascript">
+
+  
+  
+  function showLog(){ 
+      var agentlog_id = document.getElementById("agentlog_id");//输入文字的对象
+			document.write(localStorage.getItem(agentlog_id.value));
+  }  
+  function downloadLog(){ 
+      var agentlog_id = document.getElementById("agentlog_id");//输入文字的对象
+			logAgent.downloadLog(agentlog_id.value);//下载日志的函数，注意指定的日志格式
+  
+  } 
+
+</script> 
+
+输入日志名称，如：2019-01-04-15
+
+<input id="agentlog_id" name="agentlog_id" value="2019-01-04-15"/> 
+
+<button onClick="showLog()">显示日志</button> 
+<button onClick="downloadLog()">导出日志</button> 
+
+
+</body>
+
+</html>
