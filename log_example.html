@@ -31,16 +31,45 @@
 			logAgent.downloadLog(agentlog_id.value);//下载日志的函数，注意指定的日志格式
   
   } 
+  
 
 </script> 
 
-输入日志名称，如：2019-01-04-15
+基于H5的写本地日志，IE9以上都是支持的，但是IE11有问题，不能在本地打开该页面，本地打开会失效</BR>
 
+输入日志名称，如：2019-01-04-15
 <input id="agentlog_id" name="agentlog_id" value="2019-01-04-15"/> 
 
 <button onClick="showLog()">显示日志</button> 
 <button onClick="downloadLog()">导出日志</button> 
 
+<script type="text/javascript">
+//格式化日期的函数
+Date.prototype.Format = function(fmt)   
+{ //author: meizz   
+  var o = {   
+    "M+" : this.getMonth()+1,                 //月份   
+    "d+" : this.getDate(),                    //日   
+    "h+" : this.getHours(),                   //小时   
+    "m+" : this.getMinutes(),                 //分   
+    "s+" : this.getSeconds(),                 //秒   
+    "q+" : Math.floor((this.getMonth()+3)/3), //季度   
+    "S"  : this.getMilliseconds()             //毫秒   
+  };   
+  if(/(y+)/.test(fmt))   
+    fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));   
+  for(var k in o)   
+    if(new RegExp("("+ k +")").test(fmt))   
+  fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
+  return fmt;   
+} 
+
+
+//time1 = new Date().format("yyyy-MM-dd HH:mm:ss");  
+var time1 = new Date().Format("yyyy-MM-dd-hh");  
+//设置一个 默认的日期
+document.getElementById("agentlog_id").value = time1;
+</script>
 
 </body>
 
