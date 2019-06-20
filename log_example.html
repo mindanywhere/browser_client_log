@@ -18,22 +18,7 @@
 	
 </script>
 	
-<script type="text/javascript">
-
-  
-  
-  function showLog(){ 
-      var agentlog_id = document.getElementById("agentlog_id");//输入文字的对象
-			document.write(localStorage.getItem(agentlog_id.value));
-  }  
-  function downloadLog(){ 
-      var agentlog_id = document.getElementById("agentlog_id");//输入文字的对象
-			logAgent.downloadLog(agentlog_id.value);//下载日志的函数，注意指定的日志格式
-  
-  } 
-  
-
-</script> 
+ 
 
 基于H5的写本地日志，IE9以上都是支持的，但是IE11有问题，不能在本地打开该页面，本地打开会失效</BR>
 
@@ -69,6 +54,21 @@ Date.prototype.Format = function(fmt)
 var time1 = new Date().Format("yyyy-MM-dd-hh");  
 //设置一个 默认的日期
 document.getElementById("agentlog_id").value = time1;
+</script><script type="text/javascript">
+
+  
+  
+  function showLog(){ 
+      var agentlog_id = document.getElementById("agentlog_id");//输入文字的对象
+			document.write(localStorage.getItem(agentlog_id.value));
+  }  
+  function downloadLog(){ 
+      var agentlog_id = document.getElementById("agentlog_id");//输入文字的对象
+			logAgent.downloadLog(agentlog_id.value);//下载日志的函数，注意指定的日志格式
+  
+  } 
+  
+
 </script>
 
 </body>
