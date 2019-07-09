@@ -1,5 +1,8 @@
 /***
-** æœ¬JSä¸“é—¨ç”¨äºæä¾›æµè§ˆå™¨ä¸€ä¾§æœ¬åœ°åŒ–æ—¥å¿—çš„å®ç°
+** ±¾JS×¨ÃÅÓÃÓÚÌá¹©ä¯ÀÀÆ÷Ò»²à±¾µØ»¯ÈÕÖ¾µÄÊµÏÖ
+*»ùÓÚH5µÄĞ´±¾µØÈÕÖ¾£¬IE9ÒÔÉÏ¶¼ÊÇÖ§³ÖµÄ£¬µ«ÊÇIE11ÓĞÎÊÌâ£¬²»ÄÜÔÚ±¾µØ´ò¿ª¸ÃÒ³Ãæ£¬±¾µØ´ò¿ª»áÊ§Ğ§
+*²»¹ı£¬Èç¹ûÊÇ·şÎñÆ÷¶Ë·¢²¼³öÀ´µÄ»°£¬¼´Ê¹ÊÇIE11Ò²¿ÉÒÔÕı³£ÓÃµÄ
+*ÓÅ»¯ÒÔºóIE11Ò²Ö§³ÖÏÂÔØÁË
 ***/
 
 (function(logagent){
@@ -9,14 +12,31 @@
 	
 
 	
-  /* ç”Ÿæˆå’Œå–å¾—æŒ‡å®šæ—¥å¿—æ–‡ä»¶ yyyy-MM-dd-hh24
+  /* Éú³ÉºÍÈ¡µÃÖ¸¶¨ÈÕÖ¾ÎÄ¼ş yyyy-MM-dd-hh24
   */
 	this.downloadLog = function(agentlog_id) {
-		    try {
+		var browserMatch = uaMatch(); 
+		var broserVer=browserMatch.browser+browserMatch.version; 
+		if(broserVer.indexOf("IE11")>=0){
+			//alert("°æ±¾ä¯ÀÀÆ÷ÊÇIE11");
+			var downloadFileName = agentlog_id+ '-cc-agent.log';
+	            try{
+	            	var file = "data:text/plain;charset=utf-8,";
+				    var logstr =localStorage.getItem(agentlog_id);
+				    file += logstr;
+	                var blobObject = new Blob([file]); 
+	                window.navigator.msSaveBlob(blobObject, downloadFileName); 
+	            }
+	            catch(e){
+	                alert("ÏÂÔØÎÄ¼şÊ±³öÏÖ´íÎó"+e);
+	            }
+		}else{
+			//alert("ÆäËûä¯ÀÀÆ÷");
+			try {
 		    	var downloadFileName = agentlog_id+ '-cc-agent.log';
 			    var file = "data:text/plain;charset=utf-8,";
 			    var logstr =localStorage.getItem(agentlog_id);
-			    var encoded = encodeURIComponent(logstr);//è¿™ä¸€æ­¥ä¸ºäº†ä¸‹è½½æ˜¯å¿…é¡»çš„
+			    var encoded = encodeURIComponent(logstr);//ÕâÒ»²½ÎªÁËÏÂÔØÊÇ±ØĞëµÄ
 			    file += encoded;
 			    var downloadevent = document.createElement('a');
 			    downloadevent.href = file;
@@ -26,12 +46,14 @@
 			    downloadevent.click();
 			    downloadevent.remove();
 		    }catch(e){
-		    		alert("æ‚¨çš„æµè§ˆå™¨ä¸æ”¯æŒè®°å½•æœ¬åœ°æ—¥å¿—ã€‚IE11æµè§ˆå™¨åˆ™å¯èƒ½æ˜¯å› ä¸ºåœ¨æœ¬åœ°æ‰“å¼€çš„ç½‘é¡µ");
+		    		alert("ÄúµÄä¯ÀÀÆ÷²»Ö§³Ö¼ÇÂ¼±¾µØÈÕÖ¾¡£IE11ä¯ÀÀÆ÷Ôò¿ÉÄÜÊÇÒòÎªÔÚ±¾µØ´ò¿ªµÄÍøÒ³"+e);
 		    	}
+		}
+		    
 				
 	};
 	
-	/* å®šæœŸæ¸…é™¤æ—¥å¿—ï¼Œé‡Šæ”¾ç©ºé—´å¯ä»¥ç”¨åˆ°
+	/* ¶¨ÆÚÇå³ıÈÕÖ¾£¬ÊÍ·Å¿Õ¼ä¿ÉÒÔÓÃµ½
 	*/
 	this.deleteLog = function(agentlog_id){
 		    try {
@@ -39,22 +61,22 @@
 			    var logstr =localStorage.removeItem(agentlog_id);
 			    
 		    }catch(e){
-		    		alert("æ‚¨çš„æµè§ˆå™¨ä¸æ”¯æŒè®°å½•æœ¬åœ°æ—¥å¿—ã€‚IE11æµè§ˆå™¨åˆ™å¯èƒ½æ˜¯å› ä¸ºåœ¨æœ¬åœ°æ‰“å¼€çš„ç½‘é¡µ");
+		    		alert("ÄúµÄä¯ÀÀÆ÷²»Ö§³Ö¼ÇÂ¼±¾µØÈÕÖ¾¡£IE11ä¯ÀÀÆ÷Ôò¿ÉÄÜÊÇÒòÎªÔÚ±¾µØ´ò¿ªµÄÍøÒ³"+e);
 		    	}
 		}
 
 	
-  /* å†™æ—¥å¿—çš„å‡½æ•°
+  /* Ğ´ÈÕÖ¾µÄº¯Êı
   */
 	this.log = function(loginfo) {
 		if (typeof(localStorage) !== "undefined") {
 	    var now = new Date();
-			var yy = now.getFullYear();      //å¹´
-			var mm = now.getMonth() + 1;     //æœˆ
-			var dd = now.getDate();          //æ—¥
-			var hh = now.getHours();         //æ—¶
-			var ii = now.getMinutes();       //åˆ†
-			var ss = now.getSeconds();       //ç§’
+			var yy = now.getFullYear();      //Äê
+			var mm = now.getMonth() + 1;     //ÔÂ
+			var dd = now.getDate();          //ÈÕ
+			var hh = now.getHours();         //Ê±
+			var ii = now.getMinutes();       //·Ö
+			var ss = now.getSeconds();       //Ãë
 			
 			var log_clock = yy + "-";
 			if(mm < 10) log_clock += "0";
@@ -64,22 +86,62 @@
 			if(hh < 10) log_clock += "0";
 			log_clock += hh ;
 			
-			//æ—¥å¿—æŒä¹…åŒ–å¯»å€ç¼–å·ï¼Œé‡‡å–æ—¥æœŸæ¥å®šä½ yyyy-mm-dd-hh
-	    var agentlog_id = log_clock;   //è®¾ç½®å½“å‰æ—¥å¿—æ‰€åœ¨åŒºé—´çš„åç§°ç¼–å·ï¼Œé¿å…åªå†™ä¸€ä¸ªitemè¿‡å¤§å¤±è´¥
+			//ÈÕÖ¾³Ö¾Ã»¯Ñ°Ö·±àºÅ£¬²ÉÈ¡ÈÕÆÚÀ´¶¨Î» yyyy-mm-dd-hh
+	    var agentlog_id = log_clock;   //ÉèÖÃµ±Ç°ÈÕÖ¾ËùÔÚÇø¼äµÄÃû³Æ±àºÅ£¬±ÜÃâÖ»Ğ´Ò»¸öitem¹ı´óÊ§°Ü
 	    //alert(agentlog_id);
 	    var logstr =localStorage.getItem(agentlog_id);
 	    
 	    if(typeof(logstr) == "undefined"){
 	    		logstr="";
 	    	}  
-	    var str = "["+now + "]"+loginfo+"<br>\r\n";//å°†æ—¥å¿—å†…å®¹æ ¼å¼åŒ–ï¼ŒåŠ å…¥æ—¥æœŸ
+	    var str = "["+now + "]"+loginfo+"<br>\r\n";//½«ÈÕÖ¾ÄÚÈİ¸ñÊ½»¯£¬¼ÓÈëÈÕÆÚ
 	    logstr=logstr+str;
-	    localStorage.setItem(agentlog_id, logstr );//å°†æ—¥å¿—å†™å…¥localStorageä¸­,å•ä¸ªitemä¸èƒ½è¶…è¿‡5MBï¼Œä¸è¿‡ä¸€èˆ¬ä¸€ä¸ªå°æ—¶çš„æ—¥å¿—ä¸å¯èƒ½è¶…è¿‡è¿™ä¹ˆå¤š
-      //console.log("è®°å½•æ—¥å¿—");
+	    localStorage.setItem(agentlog_id, logstr );//½«ÈÕÖ¾Ğ´ÈëlocalStorageÖĞ,µ¥¸öitem²»ÄÜ³¬¹ı5MB£¬²»¹ıÒ»°ãÒ»¸öĞ¡Ê±µÄÈÕÖ¾²»¿ÉÄÜ³¬¹ıÕâÃ´¶à
+      //console.log("¼ÇÂ¼ÈÕÖ¾");
 		} else {
-		    console.log("æŠ±æ­‰ï¼æ‚¨çš„æµè§ˆå™¨ä¸æ”¯æŒè®°å½•æœ¬åœ°æ—¥å¿—ã€‚IE11æµè§ˆå™¨åˆ™å¯èƒ½æ˜¯å› ä¸ºåœ¨æœ¬åœ°æ‰“å¼€çš„ç½‘é¡µ");
+		    console.log("±§Ç¸£¡ÄúµÄä¯ÀÀÆ÷²»Ö§³Ö¼ÇÂ¼±¾µØÈÕÖ¾¡£IE11ä¯ÀÀÆ÷Ôò¿ÉÄÜÊÇÒòÎªÔÚ±¾µØ´ò¿ªµÄÍøÒ³");
 		}
 	};
 
 
 });
+
+/* ÅĞ¶ÏÈ¡µÃµ±Ç°ä¯ÀÀÆ÷µÄ°æ±¾
+ * */
+
+function uaMatch(){ 
+	//ÕıÔò±í´ïÊ½·½Ê½À´ÅĞ¶¨user-agent×Ö·û´®£¬µÃµ½µ±Ç°·ÃÎÊä¯ÀÀÆ÷£¨http´úÀí£©µÄ°æ±¾
+	var userAgent = navigator.userAgent;
+	rMsie = /(msie\s|trident.*rv:)([\w.]+)/;
+	rFirefox = /(firefox)\/([\w.]+)/;
+	rOpera = /(opera).+version\/([\w.]+)/;
+	rChrome = /(chrome)\/([\w.]+)/;
+	rSafari = /version\/([\w.]+).*(safari)/; 
+	var browser;
+	var version; 
+	var ua = userAgent.toLowerCase(); 
+    var match = rMsie.exec(ua); 
+    
+	 if(match != null){ 
+		 return { browser : "IE", version : match[2] || "0" }; 
+	 } 
+	 var match = rFirefox.exec(ua); 
+	 if (match != null) { 
+		 return { browser : match[1] || "", version : match[2] || "0" }; 
+	 } 
+	 var match = rOpera.exec(ua); 
+	 if (match != null) { 
+		 return { browser : match[1] || "", version : match[2] || "0" }; 
+	 } 
+	 var match = rChrome.exec(ua); 
+	 if (match != null) { 
+		 return { browser : match[1] || "", version : match[2] || "0" }; 
+	 } 
+	 var match = rSafari.exec(ua); 
+	 if (match != null) { 
+		 return { browser : match[2] || "", version : match[1] || "0" }; 
+	 } 
+	 if (match != null) { 
+		 return { browser : "", version : "0" }; 
+	 } 	
+} 
