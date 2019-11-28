@@ -1,4 +1,6 @@
 eclipse.preferences.version=1
 encoding/<project>=GBK
 encoding/README.md=UTF-8
-encoding/log_example.html=GBK
+encoding/log_example_db.html=GBK
+encoding/log_example_ls.html=GBK
+encoding/log_for_agent.db.js=GBK

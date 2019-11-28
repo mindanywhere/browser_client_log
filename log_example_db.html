@@ -1,0 +1,60 @@
+<html>
+
+<head>
+	<title>在本地记录日志的样例</title>
+	<script src="./log_for_agent.db.js"></script>
+</head>
+
+<body>
+	
+	
+<script>
+
+	var logAgent = new logagent();
+	logAgent.log("记录当前事件的日志内容在这里写");//写日志
+	
+	function recLog(){ 
+	      var loginfo = document.getElementById("logInfo");//输入文字的对象
+	      logAgent.log(loginfo.value);
+	  }  
+	
+</script>
+	
+	
+输入日志内容
+<input id="logInfo" name="logInfo" value=""/> 
+<button onClick="recLog()">记录日志</button> 
+
+
+<script>
+//性能测试
+
+var threadcnt0 = 0;
+	function threadLock0() {
+		logAgent.log("0 用循环手段测试日志的性能" + String(threadcnt0));
+		threadcnt0 = threadcnt0 + 1
+		setTimeout(threadLock0, 10);
+	}
+	var threadcnt1 = 0;
+	function threadLock1() {
+		logAgent.log("1 用循环手段测试日志的性能" + String(threadcnt1));
+		threadcnt1 = threadcnt1 + 1
+		setTimeout(threadLock1, 10);
+	}
+	var threadcnt2 = 0;
+	function threadLock2() {
+		logAgent.log("2 用循环手段测试日志的性能" + String(threadcnt2));
+		threadcnt2 = threadcnt2 + 1
+		setTimeout(threadcnt2, 10);
+	}
+	//threadLock0();
+	//性能测试0
+	//threadLock1();
+	//性能测试1
+	//threadLock2();
+	//性能测试2
+</script>
+
+</body>
+
+</html>

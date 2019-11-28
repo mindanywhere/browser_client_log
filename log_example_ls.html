@@ -83,18 +83,18 @@ document.getElementById("agentlog_id").value = time1;
   function threadLock2() {
 	  	logAgent.log("2用循环手段测试日志的性能"+String(cnt2));
 	  	cnt2=cnt2+1
-	    setTimeout(threadLock2, 1);
+	    setTimeout(threadLock2, 1000);
 	}
   var cnt3=0;
   function threadLock3() {
 	  	logAgent.log("3用循环手段测试日志的性能"+String(cnt3));
 	  	cnt3=cnt3+1
-	    setTimeout(threadLock3, 1);
+	    setTimeout(threadLock3, 1000);
 	}
   //通过1毫秒间隔，两线程同写日志，看出浏览器没有卡顿，同时结果也没有丢。
   //不过如果是3个线程同事些，1毫秒间隔，谷歌浏览器开始表现出卡顿，QQ浏览器没有表现出卡顿
-threadLock1();
-threadLock2();
+//threadLock1();
+//threadLock2();
 //threadLock3();
 </script>
 
